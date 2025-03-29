@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقة التهنئة</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        canvas { border: 1px solid #ccc; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>أدخل اسمك للحصول على بطاقة التهنئة</h2>
+    <input type="text" id="nameInput" placeholder="أدخل اسمك">
+    <button onclick="generateCard()">إنشاء البطاقة</button>
+    <br>
+    <canvas id="cardCanvas" width="800" height="600"></canvas>
+    <br>
+    <a id="downloadLink" style="display: none;" download="بطاقة_التهنئة.png">تحميل البطاقة</a>
+
+    <script>
+        function generateCard() {
+            var name = document.getElementById("nameInput").value;
+            if (!name) {
+                alert("يرجى إدخال الاسم");
+                return;
+            }
+
+            var canvas = document.getElementById("cardCanvas");
+            var ctx = canvas.getContext("2d");
+            var img = new Image();
+            img.src = "https://your-image-url.com/template.png"; // رابط صورة البطاقة الأساسية
+
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                ctx.font = "40px Arial";
+                ctx.fillStyle = "black";
+                ctx.textAlign = "center";
+                ctx.fillText(name, canvas.width / 2, 500); // ضبط مكان الاسم على البطاقة
+
+                var downloadLink = document.getElementById("downloadLink");
+                downloadLink.href = canvas.toDataURL();
+                downloadLink.style.display = "block";
+                downloadLink.innerText = "تحميل البطاقة";
+            };
+        }
+    </script>
+</body>
+</html>
